@@ -12,8 +12,8 @@
 		
 	// 데이터베이스 작업(PrepareStatement)
 	try{
-		String host = "jdbc:mysql://chhak.or.kr:3306/alskejdtod";
-		String user = "alskejdtod";
+		String host = "jdbc:mysql://3.35.52.87:3306/alskejdtod";
+		String user = "test";
 		String pass = "1234";
 		
 		Class.forName("com.mysql.jdbc.Driver");

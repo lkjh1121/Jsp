@@ -5,7 +5,7 @@
 
 	if(member == null){
 		response.sendRedirect("./login.jsp?success=102");
-		return; // 처리 조룡 => 아래코드 실행안함
+		return; // 처리 종료 => 아래코드 실행안함
 	}
 
 	String uid = member.getUid();

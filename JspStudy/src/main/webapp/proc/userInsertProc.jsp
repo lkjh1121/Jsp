@@ -13,9 +13,10 @@
 	String age = request.getParameter("age");
 
 	// 데이터베이스 정보
-	String host = "jdbc:mysql://chhak.or.kr:3306/alskejdtod";	
-	String user = "alskejdtod";	
-	String pass = "1234";	
+	String host = "jdbc:mysql://3.35.52.87:3306/alskejdtod";
+	String user = "test";
+	String pass = "1234";
+	
 		
 	
 	try{
