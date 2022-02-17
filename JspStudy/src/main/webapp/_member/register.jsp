@@ -90,7 +90,7 @@
 						<option value="105">인사부</option>
 					</select>
 				</td>
-			</tr>
+			</tr> 
 			<tr>
 				<td colspan="2" align="right">
 					<input type="submit" value="등록"/>
