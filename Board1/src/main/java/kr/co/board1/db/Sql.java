@@ -21,6 +21,14 @@ public class Sql {
 	
 	// board
 	public static final String SELECT_MAX_ID = "SELECT MAX(`id`) FROM `Board_article`";
+	public static final String SELECT_COUNT_ID = "SELECT COUNT(`id`) FROM `Board_article`";
+	
+	public static final String SELECT_ARTICLES = "SELECT a.*, b.`nick` FROM `Board_article` AS a "
+												+ "JOIN `Board_user` AS b "
+												+ "ON a.uid = b.uid "
+												+ "ORDER BY `id` DESC "
+												+ "LIMIT ?, 10";
+	
 	public static final String INSERT_ARTICLE = "INSERT INTO `Board_article` SET "
 												+ "`title`=?,"
 												+ "`content`=?,"
