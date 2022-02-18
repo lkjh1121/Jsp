@@ -34,6 +34,12 @@
 4. Delete
 ##
 
+### Sub6
+1 .JsonData
+2 .JsonDataList
+3 .xmlDataList
+##
+
 ### proc
 cookieConfirm.jsp
 cookieProc.jsp
@@ -79,6 +85,17 @@ loginSuccess.jsp
 logout.jsp
 ##
 
+### _member
+# proc
+- delete
+- getList
+- registerProc
+register
+modify
+list
+
+##
+
 ### java bean
 CustomerBean.java
 EmployeeBean.java
@@ -90,4 +107,12 @@ User1Bean.java
 Account.java
 Member.java
 RegisterBean.java
+##
+
+### Students
+# proc
+- getList
+- postRegister
+# list
+# register
 ##
