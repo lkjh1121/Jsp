@@ -13,7 +13,7 @@
 		<form action="./proc/registerProc.jsp" method="post">
 			<table border="1">
 				<tr>
-					<td>아이디</td>
+					<td>학번</td>
 					<td><input type="text" name="uid"/></td>
 				</tr>
 				<tr>
@@ -32,25 +32,19 @@
 					<td><input type="text" name="hp"/></td>
 				</tr>
 				<tr>
-					<td>이메일</td>
-					<td><input type="text" name="email"/></td>
-				</tr>
-				<tr>
-					<td>직급</td>
+					<td>학년</td>
 					<td>
-						<select name="pos">
-							<option>사원</option>
-							<option>대리</option>
-							<option>과장</option>
-							<option>차장</option>
-							<option>부장</option>
+						<select name="grade">
+							<option>1학년</option>
+							<option>2학년</option>
+							<option>3학년</option>
 						</select>
 					</td>
 				</tr>
 				<tr>
 					<td>부서</td>
 					<td>
-						<select name="dep">
+						<select name="regdate">
 							<option value="101">영업1부</option>
 							<option value="102">영업2부</option>
 							<option value="103">영업3부</option>
