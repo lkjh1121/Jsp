@@ -16,6 +16,15 @@ public class ArticleBean {
 	
 	// Ãß°¡ÇÊµå
 	private String fname;
+	private FileBean fb;
+	
+	public FileBean getFb() {
+		return fb;
+	}
+	public void setFb(FileBean fb) {
+		this.fb = fb;
+	}
+	
 	
 	public String getFname() {
 		return fname;
@@ -46,6 +55,10 @@ public class ArticleBean {
 	public void setParent(int parent) {
 		this.parent = parent;
 	}
+	public void setParent(String parent) {
+		this.parent = Integer.parseInt(parent);
+	}
+	
 	public int getComment() {
 		return comment;
 	}

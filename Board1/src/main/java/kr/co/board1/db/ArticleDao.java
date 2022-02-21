@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import kr.co.board1.bean.ArticleBean;
+import kr.co.board1.bean.FileBean;
 
 public class ArticleDao {
 	
@@ -60,6 +61,28 @@ public class ArticleDao {
 		return selectMaxId();
 	}
 	
+	public void insertComment(ArticleBean article) {
+		
+		try{
+			Connection conn = DBConfig.getInstance().getConnection();
+			
+			// INSERT 수행
+			PreparedStatement psmt = conn.prepareStatement(Sql.INSERT_COMMENT);
+			psmt.setInt(1, article.getParent());
+			psmt.setString(2, article.getContent());
+			psmt.setString(3, article.getUid());
+			psmt.setString(4, article.getRegip());
+			psmt.executeUpdate();
+			
+			conn.close();
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	
+	
+	
 	public int selectMaxId() {
 		
 		int id = 0;
@@ -102,7 +125,77 @@ public class ArticleDao {
 		return total;
 	}
 	
-	public void selectArticle() {}
+	public FileBean selectFile(String fid) {
+		
+		FileBean fb = null;
+		
+		try {
+			Connection conn = DBConfig.getInstance().getConnection();
+			PreparedStatement psmt = conn.prepareStatement(Sql.SELECT_FILE);
+			psmt.setString(1, fid);
+			
+			ResultSet rs = psmt.executeQuery();
+			
+			if(rs.next()) {
+				fb = new FileBean();
+				fb.setFid(rs.getInt(1));
+				fb.setParent(rs.getInt(2));
+				fb.setoName(rs.getString(3));
+				fb.setnName(rs.getString(4));
+				fb.setDownload(rs.getInt(5));
+				fb.setRdate(rs.getString(6));
+			}
+			conn.close();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return fb;
+	}
+	
+	public ArticleBean selectArticle(String id) {
+		
+		ArticleBean article = null;
+		
+		try {
+			Connection conn = DBConfig.getInstance().getConnection();
+			PreparedStatement psmt = conn.prepareStatement(Sql.SELECT_ARTICLE);
+			psmt.setString(1, id);
+
+			ResultSet rs = psmt.executeQuery();
+			if(rs.next()) {
+				article = new ArticleBean();
+				article.setId(rs.getInt(1));
+				article.setParent(rs.getInt(2));
+				article.setComment(rs.getInt(3));
+				article.setCate(rs.getString(4));
+				article.setTitle(rs.getString(5));
+				article.setContent(rs.getString(6));
+				article.setFile(rs.getInt(7));
+				article.setHit(rs.getInt(8));
+				article.setUid(rs.getString(9));
+				article.setRegip(rs.getString(10));
+				article.setRdate(rs.getString(11));
+				
+				// 파일정보
+				FileBean fb = new FileBean();
+				fb.setFid(rs.getInt(12));
+				fb.setParent(rs.getInt(13));
+				fb.setoName(rs.getString(14));
+				fb.setnName(rs.getString(15));
+				fb.setDownload(rs.getInt(16));
+				fb.setRdate(rs.getString(17));
+									
+				article.setFb(fb);
+			}
+			conn.close();
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return article;
+	}
 	
 	public List<ArticleBean> selectArticles(int start) {
 		
@@ -140,6 +233,48 @@ public class ArticleDao {
 		}
 		
 		return articles;
+	}
+	
+	public void updateFileCount(int fid) {
+		try {
+			Connection conn = DBConfig.getInstance().getConnection();
+			PreparedStatement psmt = conn.prepareStatement(Sql.UPDATE_FILE_COUNT);
+			psmt.setInt(1, fid);
+			
+			psmt.executeUpdate();
+			conn.close();
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}		
+	}
+	
+	public void updateArticleHit(int id) {
+		try {
+			Connection conn = DBConfig.getInstance().getConnection();
+			PreparedStatement psmt = conn.prepareStatement(Sql.UPDATE_ARTICLE_HIT);
+			psmt.setInt(1, id);
+			
+			psmt.executeUpdate();
+			conn.close();
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}		
+	}
+	
+	public void updateArticleComment(String id) {
+		try {
+			Connection conn = DBConfig.getInstance().getConnection();
+			PreparedStatement psmt = conn.prepareStatement(Sql.UPDATE_ARTICLE_COMMENT);
+			psmt.setString(1, id);
+			
+			psmt.executeUpdate();
+			conn.close();
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}		
 	}
 	
 	public void updateArticle() {}
