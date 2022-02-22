@@ -1,3 +1,4 @@
+<%@page import="java.util.List"%>
 <%@page import="kr.co.board1.bean.UserBean"%>
 <%@page import="kr.co.board1.bean.ArticleBean"%>
 <%@page import="kr.co.board1.db.ArticleDao"%>
@@ -19,6 +20,9 @@
 	
 	// 조회수 +1
 	dao.updateArticleHit(article.getId());
+	
+	// 댓글 가져오기
+	List<ArticleBean> comments = dao.selectComments(id);
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -27,6 +31,72 @@
     <title>글보기</title>
     <link rel="stylesheet" href="/Board1/css/style.css"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+    
+    	$(function(){
+    		
+    		// 댓글 삭제
+    		$('.commentDelete').click(function(){
+    			
+    			let isOk = confirm('정말 삭제 하시겠습니까?');
+    			
+    			if(isOk){
+    				return true;	
+    			}else{
+    				return false;
+    			}
+    		});
+    		
+    		// 댓글 수정모드 전환
+    		$('.commentModify').click(function(e){
+    			e.preventDefault();
+    			
+    			let tag = $(this);    			
+    			let textarea = tag.parent().prev();
+    			
+    			tag.prev().hide();
+    			tag.next().show();
+    			tag.hide();
+    			
+    			textarea.attr('readonly', false).focus();
+    			textarea.css({'background':'white', 'outline':'1px solid gray'});
+    		});
+    		
+    		// 댓글 수정완료
+    		$('.commentModifyComplete').click(function(e){
+    			e.preventDefault();
+    			
+    			let tag = $(this);    			
+    			let textarea = tag.parent().prev();    			 			
+    			
+    			let content = textarea.val();
+    			let id = tag.attr('data-id');
+    			
+    			let jsonData = {"content": content, "id": id};
+    			
+    			
+    			$.ajax({
+    				url: '/Board1/proc/updateComment.jsp',
+    				type: 'post',
+    				data: jsonData,
+    				dataType: 'json',
+    				success: function(data){
+    					
+    					if(data.result == 1){
+    						alert('댓글을 수정 했습니다.');
+    						// 수정완료 모드로 전환
+    						tag.hide();
+    						tag.prev().show();
+    						tag.prev().prev().show();
+    						textarea.attr('readonly', true);
+    						textarea.css({'background':'transparent', 'outline':'none'});
+    					}
+    				}
+    			});
+    		});
+    	});
+    
+    </script>
 </head>
 <body>
     <div id="wrapper">
@@ -62,20 +132,28 @@
             <!-- 댓글리스트 -->
             <section class="commentList">
                 <h3>댓글목록</h3>
+                <% for(ArticleBean comment : comments){ %>
                 <article class="comment">
                     <span>
-                        <span>길동이</span>
-                        <span>20-05-13</span>
+                        <span><%= comment.getNick() %></span>
+                        <span><%= comment.getRdate().substring(2, 10) %></span>
                     </span>
-                    <textarea name="comment" readonly>댓글 샘플입니다.</textarea>
-                    <div>
-                        <a href="#">삭제</a>
-                        <a href="#">수정</a>
-                    </div>
+                    <textarea name="comment" readonly><%= comment.getContent() %></textarea>
+                    
+                    <% if(sessUser.getUid().equals(comment.getUid())){ %>
+	                    <div>
+	                        <a class="commentDelete" href="/Board1/proc/deleteComment.jsp?id=<%= comment.getId() %>&parent=<%= comment.getParent() %>">삭제</a>
+	                        <a href="#" class="commentModify">수정</a>
+	                        <a href="#" data-id="<%= comment.getId() %>" class="commentModifyComplete">수정완료</a>
+	                    </div>
+                    <% } %>
                 </article>
-                <p class="empty">
-                    등록된 댓글이 없습니다.
-                </p>
+                <% } %>
+                
+                <% if(comments.size() == 0){ %>
+                	<p class="empty">등록된 댓글이 없습니다.</p>
+                <% } %>
+                
             </section>
 
             <!-- 댓글입력폼 -->

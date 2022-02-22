@@ -19,7 +19,7 @@
 	dao.insertComment(article);
 	
 	// 원글 comment +1
-	dao.updateArticleComment(id);
+	dao.updateArticleComment(id, true);
 	
 	// 리다이렉트
 	response.sendRedirect("/Board1/view.jsp?id="+id);

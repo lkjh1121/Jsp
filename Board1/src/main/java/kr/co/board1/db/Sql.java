@@ -35,6 +35,10 @@ public class Sql {
 												+ "ORDER BY `id` DESC "
 												+ "LIMIT ?, 10";
 	
+	public static final String SELECT_COMMENTS = "SELECT a.*, b.nick FROM `Board_article` AS a "
+												+ "JOIN `Board_user` AS b ON a.uid = b.uid "
+												+ "WHERE `parent`=? ORDER BY `id` ASC";
+	
 	public static final String INSERT_ARTICLE = "INSERT INTO `Board_article` SET "
 												+ "`title`=?,"
 												+ "`content`=?,"
@@ -59,7 +63,11 @@ public class Sql {
 	
 	public static final String UPDATE_FILE_COUNT  = "UPDATE `Board_file` SET `download` = `download` + 1 WHERE `fid`=?";
 	public static final String UPDATE_ARTICLE_HIT = "UPDATE `Board_article` SET `hit` = `hit` + 1 WHERE `id`=?";
-	public static final String UPDATE_ARTICLE_COMMENT = "UPDATE `Board_article` SET `comment` = `comment` + 1 WHERE `id`=?";
-										
+	public static final String UPDATE_ARTICLE_COMMENT_PLUS  = "UPDATE `Board_article` SET `comment` = `comment` + 1 WHERE `id`=?";
+	public static final String UPDATE_ARTICLE_COMMENT_MINUS = "UPDATE `Board_article` SET `comment` = `comment` - 1 WHERE `id`=?";
+	
+	public static final String UPDATE_COMMENT = "UPDATE `Board_article` SET `content`=? WHERE `id`=?";
+	public static final String DELETE_COMMENT = "DELETE FROM `Board_article` WHERE `id`=?";
+											  
 	
 }

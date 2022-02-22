@@ -81,8 +81,6 @@ public class ArticleDao {
 		}
 	}
 	
-	
-	
 	public int selectMaxId() {
 		
 		int id = 0;
@@ -235,6 +233,42 @@ public class ArticleDao {
 		return articles;
 	}
 	
+	public List<ArticleBean> selectComments(String parent) {
+		
+		List<ArticleBean> comments = new ArrayList<>();
+		
+		try {
+			Connection conn = DBConfig.getInstance().getConnection();
+			PreparedStatement psmt = conn.prepareStatement(Sql.SELECT_COMMENTS);
+			psmt.setString(1, parent);
+			
+			ResultSet rs = psmt.executeQuery();
+			
+			while(rs.next()) {
+				ArticleBean comment = new ArticleBean();
+				
+				comment.setId(rs.getInt(1));
+				comment.setParent(rs.getInt(2));
+				comment.setContent(rs.getString(6));
+				comment.setUid(rs.getString(9));
+				comment.setRegip(rs.getString(10));
+				comment.setRdate(rs.getString(11));
+				comment.setNick(rs.getString(12));
+				
+				comments.add(comment);
+			}
+			
+			rs.close();
+			psmt.close();
+			conn.close();
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return comments;
+	}
+	
 	public void updateFileCount(int fid) {
 		try {
 			Connection conn = DBConfig.getInstance().getConnection();
@@ -263,10 +297,19 @@ public class ArticleDao {
 		}		
 	}
 	
-	public void updateArticleComment(String id) {
+	public void updateArticleComment(String id, boolean isPlus) {
+		
 		try {
 			Connection conn = DBConfig.getInstance().getConnection();
-			PreparedStatement psmt = conn.prepareStatement(Sql.UPDATE_ARTICLE_COMMENT);
+			
+			PreparedStatement psmt = null;
+			
+			if(isPlus) {
+				psmt = conn.prepareStatement(Sql.UPDATE_ARTICLE_COMMENT_PLUS);
+			}else {
+				psmt = conn.prepareStatement(Sql.UPDATE_ARTICLE_COMMENT_MINUS);
+			}
+			
 			psmt.setString(1, id);
 			
 			psmt.executeUpdate();
@@ -278,7 +321,41 @@ public class ArticleDao {
 	}
 	
 	public void updateArticle() {}
-	public void deleteArticle() {}
+	
+	public int updateComment(String content, String id) {
+		
+		int result = 0;
+		
+		try {
+			Connection conn = DBConfig.getInstance().getConnection();
+			PreparedStatement psmt = conn.prepareStatement(Sql.UPDATE_COMMENT);
+			psmt.setString(1, content);
+			psmt.setString(2, id);
+			result = psmt.executeUpdate();
+			
+			conn.close();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	public void deleteArticle() {}	
+	public void deleteComment(String id) {
+		// ¥Ò±€ ªË¡¶
+		try {
+			Connection conn = DBConfig.getInstance().getConnection();
+			PreparedStatement psmt = conn.prepareStatement(Sql.DELETE_COMMENT);
+			psmt.setString(1, id);
+			psmt.executeUpdate();
+			
+			conn.close();
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 		
 	
 }
