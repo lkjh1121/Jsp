@@ -1,4 +1,4 @@
-<%@page import="kr.co.board1.db.ArticleDao"%>
+<%@page import="kr.co.board1.dao.ArticleDao"%>
 <%@ page contentType="application/json;charset=UTF-8" pageEncoding="UTF-8"%>
 <%
 	// 전송 데이터 수신

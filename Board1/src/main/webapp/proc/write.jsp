@@ -1,5 +1,5 @@
 <%@page import="kr.co.board1.bean.ArticleBean"%>
-<%@page import="kr.co.board1.db.ArticleDao"%>
+<%@page import="kr.co.board1.dao.ArticleDao"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.io.File"%>
 <%@page import="java.util.Date"%>

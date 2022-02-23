@@ -1,4 +1,4 @@
-package kr.co.board1.db;
+package kr.co.board1.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,6 +9,8 @@ import java.util.List;
 
 import kr.co.board1.bean.ArticleBean;
 import kr.co.board1.bean.FileBean;
+import kr.co.board1.db.DBConfig;
+import kr.co.board1.db.Sql;
 
 public class ArticleDao {
 	

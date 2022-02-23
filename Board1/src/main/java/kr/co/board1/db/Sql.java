@@ -17,6 +17,10 @@ public class Sql {
 											+ "`regip`=?,"
 											+ "`rdate`=NOW()";
 	
+	public static final String SELECT_COUNT_UID   = "SELECT COUNT(`uid`) FROM `Board_user` WHERE `uid`=?"; 
+	public static final String SELECT_COUNT_NICK  = "SELECT COUNT(`nick`) FROM `Board_user` WHERE `nick`=?"; 
+	public static final String SELECT_COUNT_EMAIL = "SELECT COUNT(`email`) FROM `Board_user` WHERE `email`=?"; 
+	public static final String SELECT_COUNT_HP    = "SELECT COUNT(`hp`) FROM `Board_user` WHERE `hp`=?"; 
 	public static final String SELECT_USER = "SELECT * FROM `Board_user` WHERE `uid`=? AND `pass`=PASSWORD(?)";
 	
 	// board

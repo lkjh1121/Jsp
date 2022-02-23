@@ -1,4 +1,4 @@
-<%@page import="kr.co.board1.db.ArticleDao"%>
+<%@page import="kr.co.board1.dao.ArticleDao"%>
 <%@page import="java.sql.Statement"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="kr.co.board1.bean.ArticleBean"%>
