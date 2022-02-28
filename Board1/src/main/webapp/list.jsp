@@ -1,3 +1,4 @@
+<%@page import="kr.co.board1.log.MyLog"%>
 <%@page import="kr.co.board1.dao.ArticleDao"%>
 <%@page import="java.sql.Statement"%>
 <%@page import="java.util.ArrayList"%>
@@ -16,12 +17,16 @@
 	// 로그인하지 않고 글목록 요청하면 로그인 페이지로 이동시킴
 	if(sessUser == null){
 		response.sendRedirect("/Board1/user/login.jsp?success=102");
-		return; // 처리 종료 <= 프로그램 실행 여기까지(아래코드 실행안함)
+		return; // <-- 프로그램 실행 여기까지
 	}
+	
+	MyLog.getInstance().info("list - 1");
 	
 	// 전송 데이터 수신
 	request.setCharacterEncoding("utf-8");
 	String pg = request.getParameter("pg");
+	
+	MyLog.getInstance().info("list pg : "+pg);
 	
 	// 페이지 번호 작업
 	int total = ArticleDao.getInstance().selectCountId();
@@ -49,6 +54,8 @@
 	if(groupEnd > lastPageNum){
 		groupEnd = lastPageNum;
 	}
+	
+	MyLog.getInstance().info("list 3");
 	
 	// 글목록 가져오기
 	List<ArticleBean> articles = ArticleDao.getInstance().selectArticles(start);
@@ -80,7 +87,7 @@
                     <% for(ArticleBean article : articles){ %>
                     <tr>
                         <td><%= pageStartNum-- %></td>
-                        <td><a href="#"><%= article.getTitle() %></a>&nbsp;[<%= article.getComment() %>]</td>
+                        <td><a href="/Board1/view.jsp?id=<%= article.getId() %>"><%= article.getTitle() %></a>&nbsp;[<%= article.getComment() %>]</td>
                         <td><%= article.getNick() %></td>
                         <td><%= article.getRdate().substring(2, 10) %></td>
                         <td><%= article.getHit() %></td>

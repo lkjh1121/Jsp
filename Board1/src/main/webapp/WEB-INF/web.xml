@@ -9,4 +9,14 @@
     <welcome-file>default.jsp</welcome-file>
     <welcome-file>default.htm</welcome-file>
   </welcome-file-list>
+
+<!-- log4j 설정-->
+  <context-param>
+	<param-name>log4jConfiguration</param-name>
+	<param-value>/WEB-INF/log4j.xml</param-value>
+  </context-param>
+  <listener>
+		<listener-class>org.apache.logging.log4j.web.Log4jServletContextListener</listener-class>
+  </listener>
+
 </web-app>

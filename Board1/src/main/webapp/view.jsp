@@ -1,3 +1,4 @@
+<%@page import="kr.co.board1.log.MyLog"%>
 <%@page import="java.util.List"%>
 <%@page import="kr.co.board1.bean.UserBean"%>
 <%@page import="kr.co.board1.bean.ArticleBean"%>
@@ -13,6 +14,7 @@
 	}
 	request.setCharacterEncoding("utf-8");
 	String id = request.getParameter("id");
+	MyLog.getInstance().info("view id : "+id);
 	
 	// 글 가져오기
 	ArticleDao dao = ArticleDao.getInstance();
@@ -124,7 +126,7 @@
             </table>
             <div>
                 <a href="#" class="btnDelete">삭제</a>
-                <a href="./modify.html" class="btnModify">수정</a>
+                <a href="/Board1/modify.jsp?id=<%= article.getId() %>" class="btnModify">수정</a>
                 <a href="/Board1/list.jsp" class="btnList">목록</a>
             </div>  
             

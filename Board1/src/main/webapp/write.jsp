@@ -1,3 +1,4 @@
+<%@page import="kr.co.board1.log.MyLog"%>
 <%@page import="kr.co.board1.bean.UserBean"%>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%
