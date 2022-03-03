@@ -16,12 +16,12 @@ public class ArticleBean {
 	
 	// 추가필드
 	private String fname;
-	private FileBean fb;
+	private File1Bean fb;
 	
-	public FileBean getFb() {
+	public File1Bean getFb() {
 		return fb;
 	}
-	public void setFb(FileBean fb) {
+	public void setFb(File1Bean fb) {
 		this.fb = fb;
 	}
 	

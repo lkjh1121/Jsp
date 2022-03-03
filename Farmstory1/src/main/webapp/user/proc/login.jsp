@@ -14,7 +14,7 @@
 		// 회원이 맞을 경우
 		session.setAttribute("sessUser", ub);
 		
-		if(cate == null && type ==null){
+		if(cate.equals("null")){
 			response.sendRedirect("/Farmstory1");
 		}else{
 			response.sendRedirect("/Farmstory1/board/list.jsp?cate="+cate+"&type="+type);

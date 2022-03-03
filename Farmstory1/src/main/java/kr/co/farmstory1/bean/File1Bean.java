@@ -1,18 +1,19 @@
 package kr.co.farmstory1.bean;
 
-public class FileBean {
-	private int fid;
+public class File1Bean {
+	
+	private int fno;
 	private int parent;
 	private String oName;
 	private String nName;
 	private int download;
 	private String rdate;
 	
-	public int getFid() {
-		return fid;
+	public int getFno() {
+		return fno;
 	}
-	public void setFid(int fid) {
-		this.fid = fid;
+	public void setFno(int fno) {
+		this.fno = fno;
 	}
 	public int getParent() {
 		return parent;
@@ -44,4 +45,6 @@ public class FileBean {
 	public void setRdate(String rdate) {
 		this.rdate = rdate;
 	}
+	
+	
 }

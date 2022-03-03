@@ -1,30 +1,52 @@
+<%@page import="java.util.List"%>
+<%@page import="kr.co.farmstory1.dao.ArticleDao"%>
+<%@page import="kr.co.farmstory1.bean.ArticleBean"%>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../_header.jsp" %>
 <%
+	// 로그인하지 않고 글목록 요청하면 로그인 페이지로 이동시킴
+	if(sessUser == null){
+		response.sendRedirect("/Farmstory1/user/login.jsp?success=102");
+		return; // <-- 프로그램 실행 여기까지
+	}
+	
 	request.setCharacterEncoding("utf-8");
 	String cate = request.getParameter("cate");
 	String type = request.getParameter("type");
+	String no = request.getParameter("no");
 	
 	pageContext.include("./inc/_"+cate+".jsp");
+	
+	
+	// 글 가져오기
+	ArticleDao dao = ArticleDao.getInstance();
+	ArticleBean article = dao.selectArticle(no);
+	
+	// 조회수 +1
+	dao.updateArticleHit(article.getNo());
+	
+	// 댓글 가져오기
+	List<ArticleBean> comments = dao.selectComments(no);
 %>
+
 <section id="board" class="view">
     <h3>글보기</h3>
     <table>
         <tr>
             <td>제목</td>
-            <td><input type="text" name="title" value="제목입니다." readonly/></td>
+            <td><input type="text" name="title" value="<%= article.getTitle() %>" readonly/></td>
         </tr>
         <tr>
             <td>첨부파일</td>
             <td>
-                <a href="#">2020년 상반기 매출자료.xls</a>
-                <span>7회 다운로드</span>
+                <a href="/Farmstory1/Board/proc/download.jsp?fid=<%= article.getFb().getFno() %>"><%= article.getFb().getoName() %></a>
+                <span><%= article.getFb().getDownload() %>회 다운로드</span>
             </td>
         </tr>
         <tr>
             <td>내용</td>
             <td>
-                <textarea name="content" readonly>내용 샘플입니다.</textarea>
+                <textarea name="content" readonly><%= article.getContent() %></textarea>
             </td>
         </tr>
     </table>
