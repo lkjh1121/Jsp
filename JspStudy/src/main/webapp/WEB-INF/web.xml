@@ -41,4 +41,16 @@
   	<url-pattern>/Sub8/WelcomeServlet.do</url-pattern>
   </servlet-mapping>
   
+ <!-- MainController 등록 및 설정 -->
+  <servlet>
+  	<servlet-name>MainController</servlet-name>
+  	<servlet-class>controller.MainController</servlet-class>  
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>MainController</servlet-name>
+  	<url-pattern>*.do</url-pattern>
+  </servlet-mapping>
+  
+  
 </web-app>
