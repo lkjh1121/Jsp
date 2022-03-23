@@ -1,2 +1,7 @@
 eclipse.preferences.version=1
+encoding//src/main/java/kr/co/board2/controller/MainController.java=UTF-8
+encoding//src/main/java/kr/co/board2/dao/ArticleDao.java=UTF-8
 encoding//src/main/java/kr/co/board2/dao/UserDao.java=UTF-8
+encoding//src/main/java/kr/co/board2/db/Sql.java=UTF-8
+encoding//src/main/java/kr/co/board2/service/ListService.java=UTF-8
+encoding//src/main/java/kr/co/board2/service/ViewService.java=UTF-8

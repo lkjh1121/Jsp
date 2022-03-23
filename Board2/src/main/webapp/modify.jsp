@@ -11,22 +11,27 @@
         <section id="board" class="modify">
             <h3>글수정</h3>
             <article>
-                <form action="#">
+                <form action="/Board2/modify.do" method="post">
                     <table>
+                    	<input type="hidden" name="no" value="${article.no}"/>
                         <tr>
                             <td>제목</td>
-                            <td><input type="text" name="title" placeholder="제목을 입력하세요."/></td>
+                            <td><input type="text" name="title"  value="${article.title}" readonly"/></td>
                         </tr>
                         <tr>
                             <td>내용</td>
                             <td>
-                                <textarea name="content"></textarea>                                
+                                <textarea name="content">${article.content}</textarea>                                
                             </td>
                         </tr>
-                        <tr>
-                            <td>첨부</td>
-                            <td><input type="file" name="file"/></td>
-                        </tr>
+                        <c:if test="${article.file > 0}">
+	                        <tr>
+	                            <td>첨부파일</td>
+	                            	<td><a href="/Board2/fileDownload.do?fno=${article.fv.fno}">${article.fv.oName}</a>
+		                        	<span>${article.fv.download}회 다운로드</span>
+		                        </td>
+	                        </tr>
+                        </c:if>
                     </table>
                     <div>
                         <a href="/Board2/list.do" class="btnCancel">취소</a>

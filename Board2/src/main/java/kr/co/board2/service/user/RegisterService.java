@@ -19,7 +19,7 @@ public class RegisterService implements CommonService {
 			// Post 요청일 경우
 			
 			String uid    = req.getParameter("uid");
-			String pass  = req.getParameter("pass");
+			String pass  = req.getParameter("pass1");
 			String name   = req.getParameter("name");
 			String nick   = req.getParameter("nick");
 			String email  = req.getParameter("email");

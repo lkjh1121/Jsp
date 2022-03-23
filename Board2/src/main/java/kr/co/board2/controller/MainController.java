@@ -1,8 +1,12 @@
 package kr.co.board2.controller;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -21,18 +25,18 @@ public class MainController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
-	// ÄÁÆ®·Ñ·¯·Î ½ÇÇàÇÒ ¼­ºñ½º¸ğµ¨ °´Ã¼ ÀÚ·á±¸Á¶
+	// ì»¨íŠ¸ë¡¤ëŸ¬ë¡œ ì‹¤í–‰í•  ì„œë¹„ìŠ¤ëª¨ë¸ ê°ì²´ ìë£Œêµ¬ì¡°
 	private Map<String, Object> instances = new HashMap<>();
 	
 	@Override
 	public void init(ServletConfig config) throws ServletException {
 		
-		// ÇÁ·ÎÆÛÆ¼ ÆÄÀÏ °æ·Î ±¸ÇÏ±â
+		// í”„ë¡œí¼í‹° íŒŒì¼ ê²½ë¡œ êµ¬í•˜ê¸°
 		ServletContext ctx = config.getServletContext();
 		String path = ctx.getRealPath("/WEB-INF")+"/urlMapping.properties";		
 		System.out.println("path : "+path);
 		
-		// ÇÁ·ÎÆÛÆ¼ ÆÄÀÏ ÀÔ·Â½ºÆ®¸² ¿¬°á ÈÄ ÇÁ·ÎÆÛÆ¼ °´Ã¼ »ı¼º
+		// í”„ë¡œí¼í‹° íŒŒì¼ ì…ë ¥ìŠ¤íŠ¸ë¦¼ ì—°ê²° í›„ í”„ë¡œí¼í‹° ê°ì²´ ìƒì„±
 		Properties prop = new Properties();
 		
 		try {
@@ -43,7 +47,7 @@ public class MainController extends HttpServlet {
 			e.printStackTrace();
 		}		
 		
-		// ÇÁ·ÎÆÛÆ¼ °´Ã¼·Î ºÎÅÍ ¼­ºñ½º °´Ã¼ »ı¼º
+		// í”„ë¡œí¼í‹° ê°ì²´ë¡œ ë¶€í„° ì„œë¹„ìŠ¤ ê°ì²´ ìƒì„±
 		Iterator iter = prop.keySet().iterator();
 		
 		while(iter.hasNext()) {
@@ -52,7 +56,7 @@ public class MainController extends HttpServlet {
 			String v = prop.getProperty(k);
 			
 			try {
-				// Å¬·¡½º¸¦ °´Ã¼·Î µ¿Àû»ı¼º
+				// í´ë˜ìŠ¤ë¥¼ ê°ì²´ë¡œ ë™ì ìƒì„±
 				Class obj = Class.forName(v);
 				Object instance = obj.newInstance();
 				
@@ -76,28 +80,65 @@ public class MainController extends HttpServlet {
 	
 	protected void requestProc(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		// ¿äÃ»ÁÖ¼Ò¿¡¼­ service °´Ã¼ÀÇ key ±¸ÇÏ±â
+		// ìš”ì²­ì£¼ì†Œì—ì„œ service ê°ì²´ì˜ key êµ¬í•˜ê¸°
 		String path = req.getContextPath();
 		String uri = req.getRequestURI();
 		String key = uri.substring(path.length());
 		
-		// instances¿¡¼­ service °´Ã¼ °¡Á®¿À±â
+		// instancesì—ì„œ service ê°ì²´ ê°€ì ¸ì˜¤ê¸°
 		CommonService service = (CommonService) instances.get(key);
 
-		// service °´Ã¼ ½ÇÇà ÈÄ view ¸®ÅÏ ¹Ş±â
+		// service ê°ì²´ ì‹¤í–‰ í›„ view ë¦¬í„´ ë°›ê¸°
 		String result = service.businessProc(req, resp);
 		
 		if(result.startsWith("redirect:")) {
-			// ¸®´ÙÀÌ·ºÆ®
+			// ë¦¬ë‹¤ì´ë ‰íŠ¸
 			String redirectUrl = result.substring(9);
 			resp.sendRedirect(redirectUrl);
 		}else if(result.startsWith("json:")) {
-			// Json Ãâ·Â
+			// Json ì¶œë ¥
+			resp.setContentType("application/json;charset=UTF-8");
+			resp.setCharacterEncoding("utf-8");
+			
 			PrintWriter out = resp.getWriter();
 			out.print(result.substring(5));
 			
+		}else if(result.startsWith("file:")){
+			// íŒŒì¼ì „ì†¡(íŒŒì¼ ë‹¤ìš´ë¡œë“œ)
+			String oName = (String) req.getAttribute("oName");
+			String nName = (String) req.getAttribute("nName");
+			
+			// íŒŒì¼ ë‹¤ìš´ë¡œë“œ response í—¤ë”ìˆ˜ì •	
+			resp.setContentType("application/octet-stream");
+			resp.setHeader("Content-Disposition", "attachment; filename="+URLEncoder.encode(oName, "utf-8"));
+			resp.setHeader("Content-Transfer-Encoding", "binary");
+			resp.setHeader("Pragma", "no-cache");
+			resp.setHeader("Cache-Control", "private");
+			
+			// response ê°ì²´ ìŠ¤íŠ¸ë¦¼ ì‘ì—…
+			String filePath = req.getServletContext().getRealPath("/file");
+			
+			File file = new File(filePath+"/"+nName);
+			
+			BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file));
+			BufferedOutputStream bos = new BufferedOutputStream(resp.getOutputStream());
+			
+			while(true){
+				int data = bis.read();
+				
+				if(data == -1){
+					break;			
+				}
+				
+				bos.write(data);
+			}
+			
+			bos.close();
+			bis.close();
+			
 		}else {
-			// view Æ÷¿öµå
+		
+			// view í¬ì›Œë“œ
 			RequestDispatcher dispatcher = req.getRequestDispatcher(result);
 			dispatcher.forward(req, resp);
 		}

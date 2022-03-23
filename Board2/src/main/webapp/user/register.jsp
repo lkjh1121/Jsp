@@ -9,16 +9,16 @@
     <script>
     	// 정규표현식
 	    let reUid  = /^[a-z]+[a-z0-9]{3,9}$/;
-	    let rePass = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{5,}$/;
-	    let reName = /^[가-힣]{2,10}$/;
-	    let reNick = /^[a-z가-힣0-9]{2,5}$/;
+	    //let rePass = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{5,}$/;
+	    //let reName = /^[가-힣]{2,10}$/;
+	    //let reNick = /^[a-z가-힣0-9]{2,5}$/;
 	    // 최종 유효성 검사에 사용될 상태변수
 	    let isUidOk   = false;
-	    let isPassOk  = false;
-	    let isNameOk  = false;
-	    let isNickOk  = false;
-	    let isEmailOk = false;
-	    let isHpOk    = false;
+	   // let isPassOk  = false;
+	    //let isNameOk  = false;
+	    //let isNickOk  = false;
+	   // let isEmailOk = false;
+	   // let isHpOk    = false;
     
     	$(function(){
     		// 아이디 중복체크
@@ -44,7 +44,7 @@
     				}
     			});
     		});
-    		// 비밀번호 유효성 검사
+    		/* / 비밀번호 유효성 검사
     		$('input[name=pass2]').focusout(function(){
     			
     			let pw1 = $('input[name=pass1]').val(); 
@@ -179,7 +179,7 @@
     			
     			return true; // 최종 폼 전송
     		});
-    	});
+    	});*/
     </script>
 </head>
 <body>

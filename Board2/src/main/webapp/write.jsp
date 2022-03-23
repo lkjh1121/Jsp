@@ -11,7 +11,8 @@
         <section id="board" class="write">
             <h3>글쓰기</h3>
             <article>
-                <form action="#">
+                <form action="/Board2/write.do" method="post" enctype="multipart/form-data">
+                	<input type="hidden" name="uid" value="${sessUser.uid}"/>
                     <table>
                         <tr>
                             <td>제목</td>
@@ -25,7 +26,7 @@
                         </tr>
                         <tr>
                             <td>첨부</td>
-                            <td><input type="file" name="file"/></td>
+                            <td><input type="file" name="fname"/></td>
                         </tr>
                     </table>
                     <div>

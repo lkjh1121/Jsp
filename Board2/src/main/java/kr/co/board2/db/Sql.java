@@ -24,24 +24,28 @@ public class Sql {
 	public static final String SELECT_USER = "SELECT * FROM `Board_user` WHERE `uid`=? AND `pass`=PASSWORD(?)";
 	
 	// board
-	public static final String SELECT_MAX_ID   = "SELECT MAX(`id`) FROM `Board_article`";
-	public static final String SELECT_COUNT_ID = "SELECT COUNT(`id`) FROM `Board_article` WHERE `parent`=0";
-	public static final String SELECT_FILE     = "SELECT * FROM `Board_file` WHERE `fid`=?";
+	public static final String SELECT_MAX_NO   = "SELECT MAX(`no`) FROM `Board_article`";
+	public static final String SELECT_COUNT_TOTAL = "SELECT COUNT(`no`) FROM `Board_article` WHERE `parent`=0 AND `type` IS NULL";
+	public static final String SELECT_FILE     = "SELECT * FROM `Board_file` WHERE `fno`=?";
 	public static final String SELECT_ARTICLE  = "SELECT * FROM `Board_article` AS a "
 												+ "LEFT JOIN `Board_file` AS b "
-												+ "ON a.id=b.parent "
-												+ "WHERE `id`=?";
+												+ "ON a.no=b.parent "
+												+ "WHERE `no`=?";
 	
 	public static final String SELECT_ARTICLES = "SELECT a.*, b.`nick` FROM `Board_article` AS a "
 												+ "JOIN `Board_user` AS b "
 												+ "ON a.uid = b.uid "
-												+ "WHERE a.parent = 0 "
-												+ "ORDER BY `id` DESC "
+												+ "WHERE a.parent = 0 AND a.type IS NULL "
+												+ "ORDER BY `no` DESC "
 												+ "LIMIT ?, 10";
 	
 	public static final String SELECT_COMMENTS = "SELECT a.*, b.nick FROM `Board_article` AS a "
 												+ "JOIN `Board_user` AS b ON a.uid = b.uid "
-												+ "WHERE `parent`=? ORDER BY `id` ASC";
+												+ "WHERE `parent`=? ORDER BY `no` ASC";
+	
+	public static final String SELECT_COMMENT = "SELECT a.*, b.nick FROM `Board_article` AS a "
+												+ "JOIN `Board_user` AS b ON a.uid = b.uid "
+												+ "WHERE `no`=?";
 	
 	public static final String INSERT_ARTICLE = "INSERT INTO `Board_article` SET "
 												+ "`title`=?,"
@@ -65,13 +69,14 @@ public class Sql {
 											+ "`rdate`=NOW()";
 	
 	
-	public static final String UPDATE_FILE_COUNT  = "UPDATE `Board_file` SET `download` = `download` + 1 WHERE `fid`=?";
-	public static final String UPDATE_ARTICLE_HIT = "UPDATE `Board_article` SET `hit` = `hit` + 1 WHERE `id`=?";
-	public static final String UPDATE_ARTICLE_COMMENT_PLUS  = "UPDATE `Board_article` SET `comment` = `comment` + 1 WHERE `id`=?";
-	public static final String UPDATE_ARTICLE_COMMENT_MINUS = "UPDATE `Board_article` SET `comment` = `comment` - 1 WHERE `id`=?";
+	public static final String UPDATE_FILE_COUNT  = "UPDATE `Board_file` SET `download` = `download` + 1 WHERE `fno`=?";
+	public static final String UPDATE_ARTICLE_HIT = "UPDATE `Board_article` SET `hit` = `hit` + 1 WHERE `no`=?";
+	public static final String UPDATE_ARTICLE_COMMENT_PLUS  = "UPDATE `Board_article` SET `comment` = `comment` + 1 WHERE `no`=?";
+	public static final String UPDATE_ARTICLE_COMMENT_MINUS = "UPDATE `Board_article` SET `comment` = `comment` - 1 WHERE `no`=?";
 	
-	public static final String UPDATE_COMMENT = "UPDATE `Board_article` SET `content`=? WHERE `id`=?";
-	public static final String DELETE_COMMENT = "DELETE FROM `Board_article` WHERE `id`=?";
+	public static final String UPDATE_ARTICLE = "UPDATE `Board_article` SET `title`=?, `content`=? WHERE `no`=?";
+	public static final String UPDATE_COMMENT = "UPDATE `Board_article` SET `content`=? WHERE `no`=?";
+	public static final String DELETE_COMMENT = "DELETE FROM `Board_article` WHERE `no`=?";
 											  
 	
 }
