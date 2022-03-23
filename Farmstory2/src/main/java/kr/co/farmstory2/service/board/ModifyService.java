@@ -1,5 +1,5 @@
-package kr.co.farmstory2.service;
-/*
+package kr.co.farmstory2.service.board;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -30,7 +30,7 @@ public class ModifyService implements CommonService{
 			String content = req.getParameter("content");
 			ArticleDao.getInstance().updateArticle(no, title, content);
 			
-			return "redirect:/Board2/view.do?no="+no;
+			return "redirect:/Farmstory2/Board/view.do?no="+no;
 		}
 		
 		
@@ -38,4 +38,3 @@ public class ModifyService implements CommonService{
 	}
 
 }
-*/

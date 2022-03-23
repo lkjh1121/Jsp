@@ -1,5 +1,5 @@
-package kr.co.farmstory2.service;
-/*
+package kr.co.farmstory2.service.board;
+
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -19,9 +19,14 @@ public class WriteService implements CommonService {
 
 	@Override
 	public String businessProc(HttpServletRequest req, HttpServletResponse resp) {
+		String cate = req.getParameter("cate");
+		String type = req.getParameter("type");
+		
+		req.setAttribute("cate", cate);
+		req.setAttribute("type", type);
 		
 		if(req.getMethod().equals("GET")) {
-			return "/write.jsp";
+			return "/board/write.jsp";
 		}else {
 			
 			// Multipart 전송 데이터 수신
@@ -62,7 +67,7 @@ public class WriteService implements CommonService {
 				ArticleDao.getInstance().insertFile(no, fname, nName);
 			}
 			
-			return "redirect:/Board2/list.do";
+			return "redirect:/Farmstory2/board/list.do";
 		}
 		
 	}// businessProc end...
@@ -86,4 +91,4 @@ public class WriteService implements CommonService {
 	
 	
 
-}*/
+}

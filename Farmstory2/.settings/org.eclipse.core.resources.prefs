@@ -1,7 +1,8 @@
 eclipse.preferences.version=1
 encoding//src/main/java/kr/co/farmstory2/service=UTF-8
-encoding//src/main/java/kr/co/farmstory2/service/CommentService.java=UTF-8
+encoding//src/main/java/kr/co/farmstory2/service/board/CommentService.java=UTF-8
 encoding//src/main/java/kr/co/farmstory2/service/user=UTF-8
 encoding//src/main/webapp/css=UTF-8
 encoding//src/main/webapp/css/style.css=UTF-8
+encoding//src/main/webapp/user/terms.jsp=UTF-8
 encoding/<project>=UTF-8

@@ -18,6 +18,6 @@ public class LogoutService implements CommonService {
 					sess.invalidate();
 					
 					// 리다이렉트
-					return "redirect:/Board2/user/login.do?success=103";
+					return "redirect:/Farmstory2/";
 		}
 }

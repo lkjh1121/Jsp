@@ -2,30 +2,30 @@
 <%@ include file="../_header.jsp" %>
 <section id="user" class="terms">
     <table>
-        <caption>»çÀÌÆ® ÀÌ¿ë¾à°ü</caption>
+        <caption>ì‚¬ì´íŠ¸ ì´ìš©ì•½ê´€</caption>
         <tr>
             <td>
-                <textarea readonly>¾à°ü³»¿ë</textarea>
+                <textarea readonly>${termsVo.terms}</textarea>
                 <p>
-                    <label><input type="checkbox" name="chk1"/>µ¿ÀÇÇÕ´Ï´Ù.</label>
+                    <label><input type="checkbox" name="chk1"/>ë™ì˜í•©ë‹ˆë‹¤.</label>
                 </p>
             </td>
         </tr>
     </table>
     <table>
-        <caption>°³ÀÎÁ¤º¸ Ãë±Þ¹æÄ§</caption>
+        <caption>ê°œì¸ì •ë³´ ì·¨ê¸‰ë°©ì¹¨</caption>
         <tr>
             <td>
-                <textarea readonly>°³ÀÎÁ¤º¸ ³»¿ë</textarea>
+                <textarea readonly>${termsVo.privacy}</textarea>
                 <p>
-                    <label><input type="checkbox" name="chk2"/>µ¿ÀÇÇÕ´Ï´Ù.</label>
+                    <label><input type="checkbox" name="chk2"/>ë™ì˜í•©ë‹ˆë‹¤.</label>
                 </p>
             </td>
         </tr>
     </table>
     <div>
-        <a href="/Farmstory2/user/login.do">Ãë¼Ò</a>
-        <a href="/Farmstory2/user/register.do">´ÙÀ½</a>
+        <a href="/Farmstory2/user/login.do">ì·¨ì†Œ</a>
+        <a href="/Farmstory2/user/register.do">ë‹¤ìŒ</a>
     </div>
 </section>
-<%@ include file="../_footer.jsp" %>
+<%@ include file="../_footer.jsp" %>   

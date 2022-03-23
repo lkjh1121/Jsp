@@ -1,7 +1,39 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../_header.jsp" %>
+<script>
+	$(function(){
+		// 아이디 중복체크
+		$('input[name=uid]').keyup(function(){
+			let value = $(this).val();
+			console.log(value);
+			
+			if(value.length > 3){
+				
+				let jsonData = {"uid": value};
+				
+				$.ajax({
+					url: '/Farmstory2/user/checkUid.do',
+					type: 'GET',
+					data: jsonData,
+					dataType: 'json',
+					success: function(data){
+						// 아이디 유효성 검사
+						if(data.result == 1){
+							$('.resultId').css('color', 'red').text('이미 사용중인 아이디 입니다.');
+						}else{							
+							$('.resultId').css('color', 'green').text('사용 가능한 아이디 입니다.');
+						}						
+					}					
+				});
+			}else{
+				$('.resultId').text('아이디는 최소 4자 이상 이어야 합니다.');
+			}
+		});
+	});
+</script>
+
 <section id="user" class="register">
-    <form action="#" method="POST">
+    <form action="/Farmstory2/user/register.do" method="POST">
         <table border="1">
             <caption>사이트 이용정보 입력</caption>
             <tr>

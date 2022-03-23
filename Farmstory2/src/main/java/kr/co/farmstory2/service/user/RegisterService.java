@@ -11,25 +11,23 @@ public class RegisterService implements CommonService {
 
 	@Override
 	public String businessProc(HttpServletRequest req, HttpServletResponse resp) {
-		
+		// GET 요청일 경우
 		if(req.getMethod().equals("GET")) {
-			// Get 요청일 경우
 			return "/user/register.jsp";	
+		// Post 요청일경우
 		}else {
-			// Post 요청일 경우
 			
-			String uid    = req.getParameter("uid");
-			String pass  = req.getParameter("pass1");
-			String name   = req.getParameter("name");
-			String nick   = req.getParameter("nick");
-			String email  = req.getParameter("email");
-			String hp     =	 req.getParameter("hp");
-			String zip    =	 req.getParameter("zip");
-			String addr1  = req.getParameter("addr1");
-			String addr2  = req.getParameter("addr2");
-			String regip  = req.getParameter("regip");
+			String uid = req.getParameter("uid");
+			String pass = req.getParameter("pass1");
+			String name = req.getParameter("name");
+			String nick = req.getParameter("nick");
+			String email = req.getParameter("email");
+			String hp = req.getParameter("hp");
+			String zip = req.getParameter("zip");
+			String addr1 = req.getParameter("addr1");
+			String addr2 = req.getParameter("addr2");
+			String regip = req.getRemoteAddr();
 			
-			// Dao 실행
 			UserVo vo = new UserVo();
 			vo.setUid(uid);
 			vo.setPass(pass);
@@ -44,12 +42,7 @@ public class RegisterService implements CommonService {
 			
 			UserDao.getInstance().insertUser(vo);
 			
-		
-		
-		
-		
-		
-			return "redirect:/Board2/user/login.do?success=102";
+			return "redirect:/Farmstory2/user/login.do?success=102";
 		}
 	}
 }

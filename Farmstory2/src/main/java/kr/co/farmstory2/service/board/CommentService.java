@@ -1,5 +1,5 @@
-package kr.co.farmstory2.service;
-/*
+package kr.co.farmstory2.service.board;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -30,12 +30,10 @@ public class CommentService implements CommonService {
 		
 		int no = dao.insertComment(vo);
 		ArticleVo comment = dao.selectComment(no);
-		// Json ������ ����
 		Gson gson = new Gson();
 		String jsonData = gson.toJson(comment);
 
-		// Json ���
 		return "json:"+jsonData;
 	}
 
-}*/
+}

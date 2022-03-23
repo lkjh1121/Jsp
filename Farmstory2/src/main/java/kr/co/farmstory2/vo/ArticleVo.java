@@ -13,6 +13,7 @@ public class ArticleVo {
 	private String uid;
 	private String regip;
 	private String rdate;
+	private String type;
 	
 	// �߰��ʵ�
 	private String fname;
@@ -112,4 +113,11 @@ public class ArticleVo {
 	public void setRdate(String rdate) {
 		this.rdate = rdate;
 	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
+	
 }

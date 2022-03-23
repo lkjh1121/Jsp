@@ -1,4 +1,4 @@
-package kr.co.farmstory2.service;
+package kr.co.farmstory2.service.board;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

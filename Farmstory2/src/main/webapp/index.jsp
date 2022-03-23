@@ -1,8 +1,13 @@
+<%@page import="kr.co.farmstory2.vo.ArticleVo"%>
+<%@page import="java.util.List"%>
+<%@page import="kr.co.farmstory2.dao.ArticleDao"%>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="./_header.jsp" %>
+<%
+	List<ArticleVo> latests = ArticleDao.getInstance().selectLatests();
+%>
    <main>
        <div class="slider">
-
            <ul>
                <li><img src="./img/main_slide_img1.jpg" alt="슬라이더1"></li>
                <li><img src="./img/main_slide_img2.jpg" alt="슬라이더2"></li>
@@ -19,13 +24,13 @@
        </div>
 
        <div class="quick">
-           <a href="#"><img src="./img/main_banner_sub1_tit.png" alt="오늘의 식단"></a>
-           <a href="#"><img src="./img/main_banner_sub2_tit.png" alt="나도 요리사"></a>                
+           <a href="/Farmstory2/board/list.do?cate=community&type=menu"><img src="./img/main_banner_sub1_tit.png" alt="오늘의 식단"></a>
+           <a href="/Farmstory2/board/list.do?cate=community&type=chef"><img src="./img/main_banner_sub2_tit.png" alt="나도 요리사"></a>                
        </div>
 
        <div class="latest">
            <div>
-               <a href="#"><img src="./img/main_latest1_tit.png" alt="텃밭 가꾸기"/></a>
+               <a href="/Farmstory2/board/list.do?cate=croptalk&type=grow"><img src="./img/main_latest1_tit.png" alt="텃밭 가꾸기"/></a>
                <img src="./img/main_latest1_img.jpg" alt="이미지"/>
                <table border="0">
                    <tr>
@@ -56,7 +61,7 @@
                </table>
            </div>
            <div>
-               <a href="#"><img src="./img/main_latest2_tit.png" alt="귀농학교"/></a>
+               <a href="/Farmstory2/board/list.do?cate=croptalk&type=school"><img src="./img/main_latest2_tit.png" alt="귀농학교"/></a>
                <img src="./img/main_latest2_img.jpg" alt="이미지"/>
                <table border="0">
                    <tr>
@@ -87,7 +92,7 @@
                </table>
            </div>
            <div>
-               <a href="#"><img src="./img/main_latest3_tit.png" alt="농작물 이야기"/></a>
+               <a href="/Farmstory2/board/list.dp?cate=croptalk&type=story"><img src="./img/main_latest3_tit.png" alt="농작물 이야기"/></a>
                <img src="./img/main_latest3_img.jpg" alt="이미지"/>
                <table border="0">
                    <tr>
@@ -111,10 +116,10 @@
                        <td>20-12-22</td>
                    </tr>
                    <tr>
-                       <td>></td>
-                       <td><a href="#">토마토! 건강하게 길러서 안심하고 먹자</a></td>
-                       <td>20-12-22</td>
-                   </tr>
+                          <td>></td>
+                          <td><a href="/Farmstory2/board/view.jsp?cate=croptalk&type=story&no=${article.getNo()}">${article.getTitle()}</a></td>
+                          <td>${article.getRdate()}</td>
+                      </tr> 
                </table>
            </div>
            

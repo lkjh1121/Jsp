@@ -24,14 +24,14 @@ public class LoginService implements CommonService {
 			
 			if(user == null) {
 				// 회원이 아님
-				return "redirect:/Board2/user/login.do?success=100";	
+				return "redirect:/Farmstory2/user/login.do?success=100";	
 				
 			}else {
 				// 회원이 맞음
 				HttpSession sess = req.getSession(); // 현재 세션 가져오기
 				sess.setAttribute("sessUser", user);
 				
-				return "redirect:/Board2/list.do";
+				return "redirect:/Farmstory2/";
 			}
 		}
 	}

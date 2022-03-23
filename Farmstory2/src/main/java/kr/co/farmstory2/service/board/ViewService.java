@@ -1,4 +1,4 @@
-package kr.co.farmstory2.service;
+package kr.co.farmstory2.service.board;
 
 import java.util.List;
 
@@ -22,7 +22,7 @@ public class ViewService implements CommonService {
 		UserVo userVo = (UserVo) sess.getAttribute("sessUser");
 		
 		if(userVo == null) {
-			return "redirect:/Board2/user/login.do";
+			return "redirect:/Farmstory2/user/login.do";
 		}else {
 			String no = req.getParameter("no");
 			

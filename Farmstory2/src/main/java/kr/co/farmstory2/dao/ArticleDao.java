@@ -19,7 +19,7 @@ public class ArticleDao {
 		return instance;
 	}
 	private ArticleDao() {}
-	/*
+	
 	// 기본 CRUD
 	public int insertArticle(ArticleVo vo) {
 		
@@ -60,7 +60,7 @@ public class ArticleDao {
 		return selectMaxNo();
 	}
 	
-	*/
+	
 	public void insertFile(int parent, String oName, String nName) {
 		try {
 			Connection conn = DBConfig.getInstance().getConnection();
@@ -74,7 +74,7 @@ public class ArticleDao {
 			e.printStackTrace();
 		}
 	}
-	/*
+	
 	public int selectMaxNo() {
 		
 		int no = 0;
@@ -101,7 +101,7 @@ public class ArticleDao {
 		try {
 			Connection conn = DBConfig.getInstance().getConnection();
 			Statement stmt = conn.createStatement();
-			ResultSet rs = stmt.executeQuery(Sql.SELECT_COUNT_TOTAL);
+			ResultSet rs = stmt.executeQuery(Sql.SELECT_COUNT_NO);
 			
 			if(rs.next()) {
 				total = rs.getInt(1);
@@ -116,7 +116,7 @@ public class ArticleDao {
 		
 		return total;
 	}
-	*/
+	
 	public ArticleVo selectArticle(String no) {
 		
 		ArticleVo article = new ArticleVo();
@@ -160,14 +160,15 @@ public class ArticleDao {
 		return article;
 	}
 	
-	public List<ArticleVo> selectArticles(int start) {
+	public List<ArticleVo> selectArticles(int start, String type) {
 		
 		List<ArticleVo> articles = new ArrayList<>();
 		
 		try {
 			Connection conn = DBConfig.getInstance().getConnection();
 			PreparedStatement psmt = conn.prepareStatement(Sql.SELECT_ARTICLES);
-			psmt.setInt(1, start);
+			psmt.setString(1, type);
+			psmt.setInt(2, start);
 			
 			ResultSet rs = psmt.executeQuery();
 			
@@ -176,7 +177,7 @@ public class ArticleDao {
 				article.setNo(rs.getInt(1));
 				article.setParent(rs.getInt(2));
 				article.setComment(rs.getInt(3));
-				article.setCate(rs.getString(4));
+				article.setType(rs.getString(4));
 				article.setTitle(rs.getString(5));
 				article.setContent(rs.getString(6));
 				article.setFile(rs.getInt(7));
@@ -185,6 +186,7 @@ public class ArticleDao {
 				article.setRegip(rs.getString(10));
 				article.setRdate(rs.getString(11).substring(2, 10));
 				article.setNick(rs.getString(12));
+				
 				articles.add(article);
 			}
 			conn.close();
@@ -193,7 +195,28 @@ public class ArticleDao {
 		}
 		return articles;
 	}
-	
+public List<ArticleVo> selectLatests(){
+		
+		List<ArticleVo> latests = new ArrayList<>();
+		
+		try {
+			Connection conn = DBConfig.getInstance().getConnection();
+			Statement stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery(Sql.SELECT_LATESTS);
+			while(rs.next()) {
+				ArticleVo article = new ArticleVo();						
+				article.setNo(rs.getInt(1));
+				article.setType(rs.getString(4));
+				article.setTitle(rs.getString(5));
+				article.setRdate(rs.getString(11).substring(2, 10));
+				latests.add(article);
+			}
+			conn.close();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return latests;
+	}
 	public List<ArticleVo> selectComments(String parent) {
 		
 		List<ArticleVo> comments = new ArrayList<>();
@@ -228,13 +251,13 @@ public class ArticleDao {
 		
 		return comments;
 	}
-	/*
+	
 	public ArticleVo selectComment(int no) {
 		
 		ArticleVo comment = new ArticleVo();
 		try {
 			Connection conn = DBConfig.getInstance().getConnection();
-			PreparedStatement psmt = conn.prepareStatement(Sql.SELECT_COMMENT);
+			PreparedStatement psmt = conn.prepareStatement(Sql.SELECT_COMMENTS);
 			psmt.setInt(1, no);
 			
 			ResultSet rs = psmt.executeQuery();
@@ -260,7 +283,7 @@ public class ArticleDao {
 		
 		return comment;
 	}
-*/
+
 	public FileVo selectFile(String fno) {
 		FileVo fvo = null;
 		try {
@@ -297,7 +320,7 @@ public class ArticleDao {
 			e.printStackTrace();
 		}
 	}
-	/*
+	
 	public void updateArticle(String no, String title, String content) {
 		
 		try {
@@ -318,7 +341,7 @@ public class ArticleDao {
 		
 		
 	}
-	*/
+	
 	public int updateComment(String content, String no) {
 		
 		int result = 0;

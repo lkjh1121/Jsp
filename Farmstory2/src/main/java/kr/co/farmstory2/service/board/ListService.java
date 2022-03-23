@@ -1,47 +1,46 @@
-package kr.co.farmstory2.service;
-/*
+package kr.co.farmstory2.service.board;
+
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import kr.co.farmstory2.controller.CommonService;
 import kr.co.farmstory2.dao.ArticleDao;
 import kr.co.farmstory2.vo.ArticleVo;
-import kr.co.farmstory2.vo.UserVo;
+import kr.co.farmstory2.controller.CommonService;
 
 public class ListService implements CommonService {
 
 	@Override
 	public String businessProc(HttpServletRequest req, HttpServletResponse resp) {
 		
-		HttpSession sess = req.getSession();
-		UserVo userVo = (UserVo) sess.getAttribute("sessUser");
+		String cate = req.getParameter("cate");
+		String type = req.getParameter("type");
 		
-		if(userVo == null) {
-			return "redirect:/Board2/user/login.do";	
-		}else {
-			String pg = req.getParameter("pg");
-			
-			// 페이지처리			
-			int currentPage  = getCurrentPageNum(pg);
-			int total        = ArticleDao.getInstance().selectCountTotal();
-			int lastPageNum  = getLastPageNum(total);			
-			int start        = getLimitStart(currentPage);
-			int pageStartNum = getPageStartNum(total, start); 
-			int[] groups     = getPageGroup(currentPage, lastPageNum);
-			
-			List<ArticleVo> articles = ArticleDao.getInstance().selectArticles(start);
-			
-			req.setAttribute("articles", articles);
-			req.setAttribute("currentPage", currentPage);
-			req.setAttribute("lastPageNum", lastPageNum);
-			req.setAttribute("pageStartNum", pageStartNum);
-			req.setAttribute("groups", groups);
-			
-			return "/list.jsp";
-		}
+//		String pg = req.getParameter("pg");
+		
+		// 페이지 처리		
+//		int currentPage  = getCurrentPageNum(pg);
+//		int total        = ArticleDao.getInstance().selectCountTotal(type);
+//		int lastPageNum  = getLastPageNum(total);
+//		int start        = getLimitStart(currentPage);
+//		int pageStartNum = getPageStartNum(total, start); 
+//		int[] groups     = getPageGroup(currentPage, lastPageNum);
+		int start = 0;
+		
+		List<ArticleVo> articles = ArticleDao.getInstance().selectArticles(start, type);
+		
+		req.setAttribute("cate", cate);
+		req.setAttribute("type", type);
+		req.setAttribute("articles", articles);
+		
+//		req.setAttribute("currentPage", currentPage);
+//		req.setAttribute("lastPageNum", lastPageNum);
+//		req.setAttribute("pageStartNum", pageStartNum);
+//		req.setAttribute("groups", groups);
+		
+		return "/board/list.jsp";
+		
 	}// businessProc end
 	
 	public int getCurrentPageNum(String pg) {
@@ -84,6 +83,5 @@ public class ListService implements CommonService {
 		
 		return groups;
 	}
-	
 
-}*/
+}
