@@ -14,7 +14,7 @@ public class ArticleBean {
 	private String regip;
 	private String rdate;
 	
-	// Ãß°¡ÇÊµå
+	// 추가필드
 	private String fname;
 	private FileBean fb;
 	
