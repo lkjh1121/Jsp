@@ -5,12 +5,7 @@
 <section id="board" class="list">
     <h3>글목록</h3>
     <article>
-		<p>
-            ${sessUser.nick}님 반갑습니다.
-            <a href="/Farmstory2/user/logout.do" class="logout">[로그아웃]</a>
-        </p>
         <table border="0">
-            
             <tr>
                 <th>번호</th>
                 <th>제목</th>
@@ -19,29 +14,29 @@
                 <th>조회</th>
             </tr>
             <c:forEach var="article" items="${articles}">
-                <tr>
-                    <td>${article.no}</td>
-                    <td><a href="/Farmstory2/board/view.do?no=${article.no}">${article.title}</a>&nbsp;[${article.comment}]</td>
-                    <td>${article.nick}</td>
-                    <td>${article.rdate}</td>
-                    <td>${article.hit}</td>
-                </tr>
-            </c:forEach>
+				<tr>
+					<td>${pageStartNum = pageStartNum - 1}</td>
+                  	<td><a href="/Farmstory2/board/view.do?cate=${cate}&type=${type}&no=${article.no}">${article.title}</a>&nbsp;[${article.comment}]</td>
+                  	<td>${article.nick}</td>
+                  	<td>${article.rdate}</td>
+                  	<td>${article.hit}</td>
+				</tr>
+			</c:forEach>
         </table>
     </article>
 
     <!-- 페이지 네비게이션 -->
-    <div class="paging">
-    	<c:if test="${groups[0] > 1}">
-        	<a href="/Farmstory2/board/list.do?pg=${groups[0] - 1}" class="prev">이전</a>
-        </c:if>
-        <c:forEach var="i" begin="${groups[0]}" end="${groups[1]}">
-        	<a href="/Farmstory2/board/list.do?pg=${i}" class="num ${currentPage == i ? 'current':'off'}">${i}</a>                
-        </c:forEach>
+	<div class="paging">
+		<c:if test="${groups[0] > 1}">
+			<a href="/Farmstory2/board/list.do?cate=${cate}&type=${type}&pg=${groups[0] - 1}" class="prev">이전</a>
+		</c:if>
+		<c:forEach var="i" begin="${groups[0]}" end="${groups[1]}">
+			<a href="/Farmstory2/board/list.do?cate=${cate}&type=${type}&pg=${i}" class="num ${currentPage == i ? 'current':'off'}">${i}</a>                
+		</c:forEach>
 		<c:if test="${groups[1] < lastPageNum}">                            
-           	<a href="/Farmstory2/board/list.do?pg=${groups[1] + 1}" class="next">다음</a>
-        </c:if>
-    </div>
+			<a href="/Farmstory2/board/list.do?cate=${cate}&type=${type}&pg=${groups[1] + 1}" class="next">다음</a>
+		</c:if>
+	</div>
 
     <!-- 글쓰기 버튼 -->
     <a href="/Farmstory2/board/write.do?cate=${cate}&type=${type}" class="btnWrite">글쓰기</a>
@@ -51,4 +46,5 @@
 </article>
 </section>
 </div>
+
 <%@ include file="../_footer.jsp" %>
